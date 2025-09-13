@@ -1,5 +1,7 @@
 ﻿using EmployeeAdminPortal.Data;
 using EmployeeAdminPortal.Interfaces.Services;
+using EmployeeAdminPortal.Models.Inputs;
+using EmployeeAdminPortal.Models.Outputs;
 using EmployeeAdminPortal.Models.Entities;
 
 namespace EmployeeAdminPortal.Services

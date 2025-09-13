@@ -1,6 +1,9 @@
-﻿namespace EmployeeAdminPortal.Interfaces.Services
+﻿using EmployeeAdminPortal.Models.Outputs;
+using EmployeeAdminPortal.Models.Inputs;
+
+namespace EmployeeAdminPortal.Interfaces.Services
 {
-    public class IEmployeesService
+    public interface IEmployeesService
     {
         Task<GetAllEmployeesOutput> GetAllEmployeesAsync();
         Task<GetEmployeeOutput> GetEmployeeByIdAsync(GetEmployeeInput input);

@@ -1,12 +1,10 @@
-﻿namespace EmployeeAdminPortal.Models.Entities
+﻿namespace EmployeeAdminPortal.Models.Inputs
 {
-    public class Employee
+    public class AddEmployeeInput
     {
-        public Guid EmployeeId { get; set; }
         public required string Name { get; set; }
         public required string Email { get; set; }
         public string? Phone { get; set; }
         public decimal Salary { get; set; }
-        public bool IsDeleted { get; set; } = false;
     }
 }
