@@ -4,6 +4,6 @@ namespace EmployeeAdminPortal.Employees.AddEmployee
 {
     public class AddEmployeeResponse
     {
-        public EmployeeDto Employee { get; set; }
+        public EmployeeDto Employee { get; set; } = null!;
     }
 }

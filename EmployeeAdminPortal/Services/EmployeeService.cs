@@ -39,7 +39,7 @@ namespace EmployeeAdminPortal.Services
 
         public async Task<DeleteEmployeeOutput?> DeleteEmployeeAsync(DeleteEmployeeInput input)
         {
-            Employee existingEmployee = await _dbContext.Employees
+            Employee? existingEmployee = await _dbContext.Employees
                 .FirstOrDefaultAsync(
                 e => e.EmployeeId == input.EmployeeId
                 && !e.IsDeleted);
@@ -70,7 +70,7 @@ namespace EmployeeAdminPortal.Services
 
         public async Task<GetEmployeeOutput> GetEmployeeByIdAsync(GetEmployeeInput input)
         {
-            Employee employee = await _dbContext.Employees
+            Employee? employee = await _dbContext.Employees
                 .FirstOrDefaultAsync(
                 e => e.EmployeeId == input.EmployeeId
                 && !e.IsDeleted);
@@ -83,7 +83,7 @@ namespace EmployeeAdminPortal.Services
 
         public async Task<UpdateEmployeeOutput?> UpdateEmployeeAsync(UpdateEmployeeInput input)
         {
-            Employee existingEmployee = await _dbContext.Employees
+            Employee? existingEmployee = await _dbContext.Employees
                 .FirstOrDefaultAsync(
                 e => e.EmployeeId == input.EmployeeId
                 && !e.IsDeleted);

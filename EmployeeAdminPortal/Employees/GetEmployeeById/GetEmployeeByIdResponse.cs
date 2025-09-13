@@ -1,4 +1,6 @@
-﻿namespace EmployeeAdminPortal.Employees.GetEmployeeById
+﻿using EmployeeAdminPortal.Employees.GetEmployeeById.Dtos;
+
+namespace EmployeeAdminPortal.Employees.GetEmployeeById
 {
     public class GetEmployeeByIdResponse
     {

@@ -1,7 +1,7 @@
 ﻿using EmployeeAdminPortal.Models.Outputs;
-using EmployeeAdminPortal.Employees.GetAllEMployees.Dtos;
+using EmployeeAdminPortal.Employees.GetAllEmployees.Dtos;
 
-namespace EmployeeAdminPortal.Employees.GetAllEMployees
+namespace EmployeeAdminPortal.Employees.GetAllEmployees
 {
     public static class GetAllEmployeesMapper
     {

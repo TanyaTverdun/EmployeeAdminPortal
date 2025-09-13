@@ -20,6 +20,11 @@ namespace EmployeeAdminPortal.Employees.UpdateEmployee
 
         public static UpdateEmployeeResponse MapToResponse(UpdateEmployeeOutput output)
         {
+            if (output.Employee is null)
+            {
+                throw new ArgumentNullException(nameof(output), "The 'Employee' property of the output cannot be null.");
+            }
+
             return new UpdateEmployeeResponse
             {
                 Employee = new EmployeeDto

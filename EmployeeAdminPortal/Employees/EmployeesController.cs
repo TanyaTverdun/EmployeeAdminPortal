@@ -4,7 +4,7 @@ using EmployeeAdminPortal.Models;
 using EmployeeAdminPortal.Models.Entities;
 using EmployeeAdminPortal.Employees.AddEmployee;
 using EmployeeAdminPortal.Employees.DeleteEmployee;
-using EmployeeAdminPortal.Employees.GetAllEMployees;
+using EmployeeAdminPortal.Employees.GetAllEmployees;
 using EmployeeAdminPortal.Employees.GetEmployeeById;
 using EmployeeAdminPortal.Employees.UpdateEmployee;
 using EmployeeAdminPortal.Interfaces.Services;
@@ -66,12 +66,6 @@ namespace EmployeeAdminPortal.Employees
 
             var response = AddEmployeeMapper.MapToResponse(output);
 
-            //        return CreatedAtAction(
-            //    nameof(GetEmployeeById),
-            //    new { id = response.Employee.EmployeeId },
-            //    response
-            //);
-
             return Ok(response);
         }
 
@@ -83,7 +77,7 @@ namespace EmployeeAdminPortal.Employees
 
             var output = await _employeesService.UpdateEmployeeAsync(input);
 
-            if (output.Employee == null)
+            if (output == null || output.Employee == null)
             {
                 return NotFound();
             }
@@ -106,7 +100,7 @@ namespace EmployeeAdminPortal.Employees
 
             var output = await _employeesService.DeleteEmployeeAsync(input);
 
-            if (output.Employee == null)
+            if (output == null || output.Employee == null)
             {
                 return NotFound();
             }

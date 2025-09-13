@@ -16,6 +16,11 @@ namespace EmployeeAdminPortal.Employees.DeleteEmployee
 
         public static DeleteEmployeeResponse MapToResponse(DeleteEmployeeOutput output)
         {
+            if (output.Employee is null)
+            {
+                throw new ArgumentNullException(nameof(output), "The 'Employee' property of the output cannot be null.");
+            }
+
             return new DeleteEmployeeResponse
             {
                 Employee = new EmployeeDto
