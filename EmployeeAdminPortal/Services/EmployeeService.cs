@@ -28,8 +28,8 @@ namespace EmployeeAdminPortal.Services
                 IsDeleted = false
             };
 
-            await _dbContext.Employees.AddAsync(newEmployee);
-            await _dbContext.SaveChangesAsync();
+            await this._dbContext.Employees.AddAsync(newEmployee);
+            await this._dbContext.SaveChangesAsync();
 
             return new AddEmployeeOutput
             {
@@ -39,7 +39,7 @@ namespace EmployeeAdminPortal.Services
 
         public async Task<DeleteEmployeeOutput?> DeleteEmployeeAsync(DeleteEmployeeInput input)
         {
-            Employee? existingEmployee = await _dbContext.Employees
+            Employee? existingEmployee = await this._dbContext.Employees
                 .FirstOrDefaultAsync(
                 e => e.EmployeeId == input.EmployeeId
                 && !e.IsDeleted);
@@ -50,7 +50,7 @@ namespace EmployeeAdminPortal.Services
             }
 
             existingEmployee.IsDeleted = true;
-            await _dbContext.SaveChangesAsync();
+            await this._dbContext.SaveChangesAsync();
 
             return new DeleteEmployeeOutput
             {
@@ -60,7 +60,7 @@ namespace EmployeeAdminPortal.Services
 
         public async Task<GetAllEmployeesOutput> GetAllEmployeesAsync()
         {
-            List<Employee> employees = await _dbContext.Employees.Where(e => !e.IsDeleted).ToListAsync();
+            List<Employee> employees = await this._dbContext.Employees.Where(e => !e.IsDeleted).ToListAsync();
 
             return new GetAllEmployeesOutput
             {
@@ -70,7 +70,7 @@ namespace EmployeeAdminPortal.Services
 
         public async Task<GetEmployeeOutput> GetEmployeeByIdAsync(GetEmployeeInput input)
         {
-            Employee? employee = await _dbContext.Employees
+            Employee? employee = await this._dbContext.Employees
                 .FirstOrDefaultAsync(
                 e => e.EmployeeId == input.EmployeeId
                 && !e.IsDeleted);
@@ -83,7 +83,7 @@ namespace EmployeeAdminPortal.Services
 
         public async Task<UpdateEmployeeOutput?> UpdateEmployeeAsync(UpdateEmployeeInput input)
         {
-            Employee? existingEmployee = await _dbContext.Employees
+            Employee? existingEmployee = await this._dbContext.Employees
                 .FirstOrDefaultAsync(
                 e => e.EmployeeId == input.EmployeeId
                 && !e.IsDeleted);
@@ -98,7 +98,7 @@ namespace EmployeeAdminPortal.Services
             existingEmployee.Phone = input.Phone;
             existingEmployee.Salary = input.Salary;
 
-            await _dbContext.SaveChangesAsync();
+            await this._dbContext.SaveChangesAsync();
 
             return new UpdateEmployeeOutput
             {
