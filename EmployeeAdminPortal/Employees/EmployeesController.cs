@@ -19,13 +19,13 @@ namespace EmployeeAdminPortal.Employees
 
         public EmployeesController(IEmployeesService employeesService)
         {
-            _employeesService = employeesService;
+            this._employeesService = employeesService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllEmployees()
         {
-            var output = await _employeesService.GetAllEmployeesAsync();
+            var output = await this._employeesService.GetAllEmployeesAsync();
 
             var response = GetAllEmployeesMapper.MapToResponse(output);
 
@@ -44,7 +44,7 @@ namespace EmployeeAdminPortal.Employees
 
             var input = GetEmployeeByIdMapper.MapToInput(request);
 
-            var output = await _employeesService.GetEmployeeByIdAsync(input);
+            var output = await this._employeesService.GetEmployeeByIdAsync(input);
 
             var response = GetEmployeeByIdMapper.MapToResponse(output);
 
@@ -56,13 +56,12 @@ namespace EmployeeAdminPortal.Employees
             return Ok(response);
         }
 
-        //////////////////////////////////////////////////////////////
         [HttpPost]
         public async Task<IActionResult> AddEmployee([FromBody] AddEmployeeRequest request)
         {
             var input = AddEmployeeMapper.MapToInput(request);
 
-            var output = await _employeesService.AddEmployeeAsync(input);
+            var output = await this._employeesService.AddEmployeeAsync(input);
 
             var response = AddEmployeeMapper.MapToResponse(output);
 
@@ -75,7 +74,7 @@ namespace EmployeeAdminPortal.Employees
         {
             var input = UpdateEmployeeMapper.MapToInput(id, request);
 
-            var output = await _employeesService.UpdateEmployeeAsync(input);
+            var output = await this._employeesService.UpdateEmployeeAsync(input);
 
             if (output == null || output.Employee == null)
             {
@@ -98,7 +97,7 @@ namespace EmployeeAdminPortal.Employees
 
             var input = DeleteEmployeeMapper.MapToInput(request);
 
-            var output = await _employeesService.DeleteEmployeeAsync(input);
+            var output = await this._employeesService.DeleteEmployeeAsync(input);
 
             if (output == null || output.Employee == null)
             {
