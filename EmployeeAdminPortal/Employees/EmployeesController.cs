@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using EmployeeAdminPortal.Data;
-using EmployeeAdminPortal.Models;
-using EmployeeAdminPortal.Models.Entities;
 using EmployeeAdminPortal.Employees.AddEmployee;
 using EmployeeAdminPortal.Employees.DeleteEmployee;
 using EmployeeAdminPortal.Employees.GetAllEmployees;
