@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using EmployeeAdminPortal.Employees.AddEmployee;
-using EmployeeAdminPortal.Employees.DeleteEmployee;
 using EmployeeAdminPortal.Employees.GetAllEmployees;
 using EmployeeAdminPortal.Employees.GetEmployeeById;
 using EmployeeAdminPortal.Employees.UpdateEmployee;
 using EmployeeAdminPortal.Interfaces.Services;
+using EmployeeAdminPortal.Models.Inputs;
 
 namespace EmployeeAdminPortal.Employees
 {
@@ -27,19 +27,17 @@ namespace EmployeeAdminPortal.Employees
             var response = GetAllEmployeesMapper.MapToResponse(output);
 
             return Ok(response);
-
         }
 
         [HttpGet]
         [Route("{id:guid}")]
         public async Task<IActionResult> GetEmployeeById(Guid id)
         {
-            var request = new GetEmployeeByIdRequest
+
+            var input = new GetEmployeeInput()
             {
                 EmployeeId = id
             };
-
-            var input = GetEmployeeByIdMapper.MapToInput(request);
 
             var output = await this._employeesService.GetEmployeeByIdAsync(input);
 
@@ -58,11 +56,9 @@ namespace EmployeeAdminPortal.Employees
         {
             var input = AddEmployeeMapper.MapToInput(request);
 
-            var output = await this._employeesService.AddEmployeeAsync(input);
+            await this._employeesService.AddEmployeeAsync(input);
 
-            var response = AddEmployeeMapper.MapToResponse(output);
-
-            return Ok(response);
+            return NoContent();
         }
 
         [HttpPut]
@@ -73,37 +69,31 @@ namespace EmployeeAdminPortal.Employees
 
             var output = await this._employeesService.UpdateEmployeeAsync(input);
 
-            if (output == null || output.Employee == null)
+            if (output.Employee == null)
             {
                 return NotFound();
             }
 
-            var response = UpdateEmployeeMapper.MapToResponse(output);
-
-            return Ok(response);
+            return NoContent();
         }
 
         [HttpDelete]
         [Route("{id:guid}")]
         public async Task<IActionResult> DeleteEmployee(Guid id)
         {
-            var request = new DeleteEmployeeRequest
+            var input = new DeleteEmployeeInput()
             {
                 EmployeeId = id
             };
 
-            var input = DeleteEmployeeMapper.MapToInput(request);
-
             var output = await this._employeesService.DeleteEmployeeAsync(input);
 
-            if (output == null || output.Employee == null)
+            if (output.Employee == null)
             {
                 return NotFound();
             }
 
-            var response = DeleteEmployeeMapper.MapToResponse(output);
-
-            return Ok(response);
+            return NoContent();
         }
     }
 }

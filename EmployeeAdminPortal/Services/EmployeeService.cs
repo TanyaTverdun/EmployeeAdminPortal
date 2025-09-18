@@ -4,6 +4,7 @@ using EmployeeAdminPortal.Models.Inputs;
 using EmployeeAdminPortal.Models.Outputs;
 using EmployeeAdminPortal.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using EmployeeAdminPortal.Extensions;
 
 namespace EmployeeAdminPortal.Services
 {
@@ -16,7 +17,7 @@ namespace EmployeeAdminPortal.Services
             this._dbContext = dbContext;
         }
 
-        public async Task<AddEmployeeOutput> AddEmployeeAsync(AddEmployeeInput input)
+        public async Task AddEmployeeAsync(AddEmployeeInput input)
         {
             Employee newEmployee = new Employee()
             {
@@ -30,14 +31,9 @@ namespace EmployeeAdminPortal.Services
 
             await this._dbContext.Employees.AddAsync(newEmployee);
             await this._dbContext.SaveChangesAsync();
-
-            return new AddEmployeeOutput
-            {
-                Employee = newEmployee
-            };
         }
 
-        public async Task<DeleteEmployeeOutput?> DeleteEmployeeAsync(DeleteEmployeeInput input)
+        public async Task<DeleteEmployeeOutput> DeleteEmployeeAsync(DeleteEmployeeInput input)
         {
             Employee? existingEmployee = await this._dbContext.Employees
                 .FirstOrDefaultAsync(
@@ -46,7 +42,10 @@ namespace EmployeeAdminPortal.Services
 
             if (existingEmployee == null)
             {
-                return null;
+                return new DeleteEmployeeOutput
+                {
+                    Employee = null
+                };
             }
 
             existingEmployee.IsDeleted = true;
@@ -81,22 +80,22 @@ namespace EmployeeAdminPortal.Services
             };
         }
 
-        public async Task<UpdateEmployeeOutput?> UpdateEmployeeAsync(UpdateEmployeeInput input)
+        public async Task<UpdateEmployeeOutput> UpdateEmployeeAsync(UpdateEmployeeInput input)
         {
             Employee? existingEmployee = await this._dbContext.Employees
                 .FirstOrDefaultAsync(
-                e => e.EmployeeId == input.EmployeeId
+                e => e.EmployeeId == input.Employee.EmployeeId
                 && !e.IsDeleted);
 
             if (existingEmployee == null)
             {
-                return null;
+                return new UpdateEmployeeOutput
+                {
+                    Employee = null
+                };
             }
 
-            existingEmployee.Name = input.Name;
-            existingEmployee.Email = input.Email;
-            existingEmployee.Phone = input.Phone;
-            existingEmployee.Salary = input.Salary;
+            existingEmployee.CopyFrom(input.Employee);
 
             await this._dbContext.SaveChangesAsync();
 

@@ -1,23 +1,16 @@
 ﻿using EmployeeAdminPortal.Models.Outputs;
 using EmployeeAdminPortal.Employees.GetAllEmployees.Dtos;
+using Riok.Mapperly.Abstractions;
+using EmployeeAdminPortal.Models.Entities;
 
 namespace EmployeeAdminPortal.Employees.GetAllEmployees
 {
-    public static class GetAllEmployeesMapper
+    [Mapper]
+    public static partial class GetAllEmployeesMapper
     {
-        public static GetAllEmployeesResponse MapToResponse(GetAllEmployeesOutput output)
-        {
-            return new GetAllEmployeesResponse
-            {
-                Employees = output.Employees.Select(e => new EmployeeDto
-                {
-                    EmployeeId = e.EmployeeId,
-                    Name = e.Name,
-                    Email = e.Email,
-                    Phone = e.Phone,
-                    Salary = e.Salary
-                }).ToList()
-            };
-        }
+        public static partial GetAllEmployeesResponse MapToResponse(GetAllEmployeesOutput output);
+
+        [MapperIgnoreSource(nameof(Employee.IsDeleted))]
+        private static partial EmployeeDto MapEmployeeToDto(Employee employee);
     }
 }

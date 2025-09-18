@@ -1,40 +1,26 @@
 ﻿using EmployeeAdminPortal.Models.Inputs;
 using EmployeeAdminPortal.Models.Outputs;
 using EmployeeAdminPortal.Employees.UpdateEmployee.Dtos;
+using Riok.Mapperly.Abstractions;
+using EmployeeAdminPortal.Models.Entities;
 
 namespace EmployeeAdminPortal.Employees.UpdateEmployee
 {
-    public static class UpdateEmployeeMapper
+    [Mapper]
+    public static partial class UpdateEmployeeMapper
     {
         public static UpdateEmployeeInput MapToInput(Guid EmployeeId, UpdateEmployeeRequest request)
         {
-            return new UpdateEmployeeInput
-            {
-                EmployeeId = EmployeeId,
-                Name = request.Employee.Name,
-                Email = request.Employee.Email,
-                Phone = request.Employee.Phone,
-                Salary = request.Employee.Salary
-            };
-        }
+            var input = MapFromDto(request);
+            input.Employee.EmployeeId = EmployeeId;
 
-        public static UpdateEmployeeResponse MapToResponse(UpdateEmployeeOutput output)
-        {
-            if (output.Employee is null)
-            {
-                throw new ArgumentNullException(nameof(output), "The 'Employee' property of the output cannot be null.");
-            }
-
-            return new UpdateEmployeeResponse
-            {
-                Employee = new EmployeeDto
-                {
-                    Name = output.Employee.Name,
-                    Email = output.Employee.Email,
-                    Phone = output.Employee.Phone,
-                    Salary = output.Employee.Salary
-                }
-            };
+            return input;
         }
+        private static partial UpdateEmployeeInput MapFromDto(UpdateEmployeeRequest request);
+
+
+        [MapperIgnoreTarget(nameof(Employee.IsDeleted))]
+        [MapperIgnoreTarget(nameof(Employee.EmployeeId))]
+        private static partial Employee MapEmployeeDtoToEmployee(EmployeeDto employee);
     }
 }
