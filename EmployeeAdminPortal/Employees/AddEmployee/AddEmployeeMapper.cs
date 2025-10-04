@@ -9,10 +9,10 @@ namespace EmployeeAdminPortal.Employees.AddEmployee
     [Mapper]
     public static partial class AddEmployeeMapper
     {
-        [MapProperty("Employee.Name", "Name")]
-        [MapProperty("Employee.Email", "Email")]
-        [MapProperty("Employee.Phone", "Phone")]
-        [MapProperty("Employee.Salary", "Salary")]
+        [MapProperty(nameof(AddEmployeeRequest.Employee.Name), nameof(AddEmployeeInput.Name))]
+        [MapProperty(nameof(AddEmployeeRequest.Employee.Email), nameof(AddEmployeeInput.Email))]
+        [MapProperty(nameof(AddEmployeeRequest.Employee.Phone), nameof(AddEmployeeInput.Phone))]
+        [MapProperty(nameof(AddEmployeeRequest.Employee.Salary), nameof(AddEmployeeInput.Salary))]
         public static partial AddEmployeeInput MapToInput(AddEmployeeRequest request);
     }
 }
