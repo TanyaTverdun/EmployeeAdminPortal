@@ -1,7 +1,4 @@
-﻿using EmployeeAdminPortal.Employees.AddEmployee.Dtos;
-using EmployeeAdminPortal.Models.Entities;
-using EmployeeAdminPortal.Models.Inputs;
-using EmployeeAdminPortal.Models.Outputs;
+﻿using EmployeeAdminPortal.Models.Inputs;
 using Riok.Mapperly.Abstractions;
 
 namespace EmployeeAdminPortal.Employees.AddEmployee
