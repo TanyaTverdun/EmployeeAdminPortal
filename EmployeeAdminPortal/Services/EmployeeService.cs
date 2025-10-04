@@ -5,16 +5,19 @@ using EmployeeAdminPortal.Models.Outputs;
 using EmployeeAdminPortal.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using EmployeeAdminPortal.Extensions;
+using EmployeeAdminPortal.Interfaces.Validators;
 
 namespace EmployeeAdminPortal.Services
 {
     public class EmployeeService : IEmployeesService
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly IEmployeeValidator _employeeValidator;
 
-        public EmployeeService(ApplicationDbContext dbContext)
+        public EmployeeService(ApplicationDbContext dbContext, IEmployeeValidator employeeValidator)
         {
             this._dbContext = dbContext;
+            this._employeeValidator = employeeValidator;
         }
 
         public async Task AddEmployeeAsync(AddEmployeeInput input)
@@ -35,10 +38,7 @@ namespace EmployeeAdminPortal.Services
 
         public async Task<DeleteEmployeeOutput> DeleteEmployeeAsync(DeleteEmployeeInput input)
         {
-            Employee? existingEmployee = await this._dbContext.Employees
-                .FirstOrDefaultAsync(
-                e => e.EmployeeId == input.EmployeeId
-                && !e.IsDeleted);
+            Employee? existingEmployee = await this._employeeValidator.ValidateAndGetEmployeeAsync(input.EmployeeId);
 
             if (existingEmployee == null)
             {
@@ -69,10 +69,7 @@ namespace EmployeeAdminPortal.Services
 
         public async Task<GetEmployeeOutput> GetEmployeeByIdAsync(GetEmployeeInput input)
         {
-            Employee? employee = await this._dbContext.Employees
-                .FirstOrDefaultAsync(
-                e => e.EmployeeId == input.EmployeeId
-                && !e.IsDeleted);
+            Employee? employee = await this._employeeValidator.ValidateAndGetEmployeeAsync(input.EmployeeId);
 
             return new GetEmployeeOutput
             {
@@ -82,10 +79,7 @@ namespace EmployeeAdminPortal.Services
 
         public async Task<UpdateEmployeeOutput> UpdateEmployeeAsync(UpdateEmployeeInput input)
         {
-            Employee? existingEmployee = await this._dbContext.Employees
-                .FirstOrDefaultAsync(
-                e => e.EmployeeId == input.Employee.EmployeeId
-                && !e.IsDeleted);
+            Employee? existingEmployee = await this._employeeValidator.ValidateAndGetEmployeeAsync(input.Employee.EmployeeId);
 
             if (existingEmployee == null)
             {
